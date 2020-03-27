@@ -74,30 +74,30 @@ Las tasad de transición entre estados están dadas por los parámetros:
 
 
 <a name="model-determ"></a>
-### Deterministic Model
+### Modelo Determinístico
 
-The evolution of the SEIRS dynamics described above can be described by the following systems of differential equations. Importantly, this version of the model is deterministic and assumes a uniformly-mixed population. 
+La evolución de la dinpamica de SEIRS descrita arriba puede ser explicada por el siguiente sistema de ecuaciones diferenciales. Es importante resaltar que esta versión del modelo es determinística y asume una población uniformemente distribuida. 
 
-#### SEIRS Dynamics
+#### Dinámica de SEIRS
 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRS_deterministic_equations.png" width="210"></div>
 </p>
 
-where *S*, *E*, *I*, *R*, and *F* are the numbers of susceptible, exposed, infectious, receovered, and deceased individuals, respectively, and *N* is the total number of individuals in the population (parameters are described above).
+donde *S*, *E*, *I*, *R*, y *F* son los números de individuos susceptibles, expuestos, infectados, recuperados, y fallecidos, respectivamente, y *N* es el número total de individuos en la población (parámetros que se describen arriba).
 
-#### SEIRS Dynamics with Testing
+#### Dinámica de SEIRS con Pruebas de Enfermedad
 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRStesting_deterministic_equations.png" width="400"></div>
 </p>
 
-where *S*, *E*, *I*, *D<sub>E</sub>*, *D<sub>I</sub>*, *R*, and *F* are the numbers of susceptible, exposed, infectious, detected exposed, detected infectious, receovered, and deceased individuals, respectively, and *N* is the total number of individuals in the population (parameters are described above).
+donde *S*, *E*, *I*, *D<sub>E</sub>*, *D<sub>I</sub>*, *R*, y *F* son los números de individuos susceptibles, expuestos, infectados, expuestos detectados, infectados detectados, recuperados, y fallecidos, respectivamente, y *N* es el número total de individuos en la población  (parámetros que se describen arriba).
 
 <a name="model-network"></a>
-### Network Model
+### Modelo de Red
 
-The standard SEIRS model captures important features of infectious disease dynamics, but it is deterministic and assumes uniform mixing of the population (every individual in the population is equally likely to interact with every other individual). However, it is often important to consider stochastic effects and the structure of contact networks when studying disease transmission and the effect of interventions such as social distancing and contact tracing.
+El modelo SEIRS estándr captura caracterpisticas importantes de la dinámica de las infecciones, but it is deterministic and assumes uniform mixing of the population (every individual in the population is equally likely to interact with every other individual). However, it is often important to consider stochastic effects and the structure of contact networks when studying disease transmission and the effect of interventions such as social distancing and contact tracing.
 
 This package includes implementation of the SEIRS dynamics on stochastic dynamical networks. This avails analysis of the realtionship between network structure and effective transmission rates, including the effect of network-based interventions such as social distancing, quarantining, and contact tracing.
 
