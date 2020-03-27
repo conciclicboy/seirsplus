@@ -45,32 +45,32 @@ Las tasas de transmisión entre estados están dadas por los parámetros:
 * μ<sub>I</sub>: tasa de mortalidad de la enfermedad (muertes por individuos infectados por tiempo)
 
 <a name="model-seirstesting"></a>
-### SEIRS Dyanmics with Testing
+### Dinámica de SEIRS con Pruebas de la enfermedad
 
-The effect of testing for infection on the dynamics can be modeled by introducing states corresponding to **detected exposed (*D<sub>E</sub>*)** and **detected infectious (*D<sub>I</sub>*)**. Exposed and infectious individuals are tested at rates *θ<sub>E</sub>* and *θ<sub>I</sub>*, respectively, and test positively for infection with rates *ψ<sub>E</sub>* and *ψ<sub>I</sub>*, respectively  (the false positive rate is assumed to be zero, so susceptible individuals never test positive). Testing positive moves an individual into the appropriate detected case state, where rates of transmission, progression, recovery, and/or mortality (as well as network connectivity in the network model) may be different than those of undetected cases.
+El efecto de examinar la infección en la dinámica puede ser modelado introduciendo estados correspondientes a **exposición detectada (*D<sub>E</sub>*)** e **infección detectada (*D<sub>I</sub>*)**. Individuos expuestos e infectados son examinados a tasas *θ<sub>E</sub>* y *θ<sub>I</sub>*, respectivamente, y examinados test positivamente por la infección con tasas *ψ<sub>E</sub>* y *ψ<sub>I</sub>*, respectivamente  (la tasa de falsos positivos se asume ser cero, de modo que individuos susceptibles nunca dan positivo). Evaluaciones positivas mueven al individuo en estados de caso detectado, donde las tasas de transmisión, progresión, recuperación, y/o mortalidad (así como conectividad de la red en el modelo de red) podrían ser diferentes de los casos no detectados.
 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRStesting_diagram.png" width="400"></div>
 </p>
 
-The rates of transition between the states are given by the parameters:
-* β: rate of transmission (transmissions per S-I contact per time)
-* σ: rate of progression (inverse of incubation period)
-* γ: rate of recovery (inverse of infectious period)
-* μ<sub>I</sub>: rate of mortality from the disease (deaths per infectious individual per time)
-* ξ: rate of re-susceptibility (inverse of temporary immunity period; 0 if permanent immunity)
-* θ<sub>E</sub>: rate of testing for exposed individuals 
-* θ<sub>I</sub>: rate of testing for infectious individuals 
-* ψ<sub>E</sub>: rate of positive test results for exposed individuals 
-* ψ<sub>I</sub>: rate of positive test results for infectious individuals 
-* β<sub>D</sub>: rate of transmission for detected cases (transmissions per S-D<sub>I</sub> contact per time)
-* σ<sub>D</sub>: rate of progression for detected cases (inverse of incubation period)
-* γ<sub>D</sub>: rate of recovery for detected cases (inverse of infectious period)
-* μ<sub>D</sub>: rate of mortality from the disease for detected cases (deaths per infectious individual per time)
+Las tasad de transición entre estados están dadas por los parámetros:
+* β: tasa de transmisión (transmisiones por contacto S-I contact por tiempo)
+* σ: tasa de progresión (inverso del período de incubación)
+* γ: tasa de recuperación (inverso del período de infección)
+* μ<sub>I</sub>: tasa de mortalidad de la enfermedad (muertes por infección individual por tiempo)
+* ξ: tasa de re-susceptibilidad (inverso del período de inmudinad temporal; 0 si hay inmunidad permanente)
+* θ<sub>E</sub>: tasa de evaluación de individuos expuestos 
+* θ<sub>I</sub>: tasa de evaluación de infeccionesn individuales 
+* ψ<sub>E</sub>: tasa de pruebas positivas de individuos expuestos
+* ψ<sub>I</sub>: tasa de pruebas positivas para individuos infectados 
+* β<sub>D</sub>: tasa de transmisión de casos detectados (transmisiones por S-D<sub>I</sub> contacto por tiempo)
+* σ<sub>D</sub>: tasa de progresión de casos detectados (inverso del período de incubación)
+* γ<sub>D</sub>: tasa de recuperación de casos detectados (inverso del período de infección)
+* μ<sub>D</sub>: tasa de mortalidad dela enfermedad para los casos detectedos (muertes por infecciones por tiempo)
 
-*Vital dynamics are also supported in these models (optional, off by default), but aren't discussed in the README.* 
+*Dinámicas vitales también son consideradas en los modelos(opcionales, pero inactivas por default), pero no son discutidas en el README.* 
 
-*See [model equations documentation](https://github.com/ryansmcgee/seirsplus/blob/master/docs/SEIRSplus_Model.pdf) for more information about the  model equations.*
+*Vea las [documentación de las ecuaciones del modelo](https://github.com/ryansmcgee/seirsplus/blob/master/docs/SEIRSplus_Model.pdf) para más información de las ecuaciones del modelo.*
 
 
 <a name="model-determ"></a>
