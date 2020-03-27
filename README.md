@@ -1,6 +1,8 @@
 # SEIRS+ Model
 
-Clonado del repositorio original de [SEIRS Model](https://github.com/ryansmcgee/seirsplus)
+Clonado del repositorio original de [SEIRS Model](https://github.com/ryansmcgee/seirsplus).
+<br>
+
 Este paquete implementa el modelo dinámico de enfermedades infecciosas generalizado SEIRS con extensiones que modelan el efecto de factores incluyendo la estructura poblacional, distancia social, pruebas de la enfermedad, seguimiento de contactos y cuarentena de contactos detectados.
 
 Notablemente, este paquete incluye una implementación estocástica de los modelos en redes dinámicas.
