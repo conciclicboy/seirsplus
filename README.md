@@ -1,45 +1,46 @@
 # SEIRS+ Model
 
-This package implements generalized SEIRS infectious disease dynamics models with extensions that model the effect of factors including population structure, social distancing, testing, contact tracing, and quarantining detected cases. 
+Clonado del repositorio original de [SEIRS Model](https://github.com/ryansmcgee/seirsplus)
+Este paquete implementa el modelo dinámico de enfermedades infecciosas generalizado SEIRS con extensiones que modelan el efecto de factores incluyendo la estructura poblacional, distancia social, pruebas de la enfermedad, seguimiento de contactos y cuarentena de contactos detectados.
 
-Notably, this package includes stochastic implementations of these models on dynamic networks.
+Notablemente, este paquete incluye una implementación estocástica de los modelos en redes dinámicas.
 
-**README Contents:**
-* [ Model Description ](#model)
-   * [ SEIRS Dynamics ](#model-seirs)
-   * [ SEIRS Dynamics with Testing ](#model-seirstesting)
-   * [ Deterministic Model ](#model-determ)
-   * [ Network Model ](#model-network)
-      * [ Network Model with Testing, Contact Tracing, and Quarantining ](#model-network-ttq)
-* [ Code Usage ](#usage)
-   * [ Quick Start ](#usage-start)
-   * [ Installing and Importing the Package ](#usage-install)
-   * [ Initializing the Model ](#usage-init)
-      * [ Deterministic Model ](#usage-init-determ)
-      * [ Network Model ](#usage-init-network)
-   * [ Running the Model ](#usage-run)
-   * [ Accessing Simulation Data ](#usage-data)
-   * [ Changing parameters during a simulation ](#usage-checkpoints)
+**README Contenidos:**
+* [ Descripción del Modelo ](#model)
+   * [ Dinámica de SEIRS ](#model-seirs)
+   * [ Dinámica de SEIRS con pruebas ](#model-seirstesting)
+   * [ Modelo Determinístico ](#model-determ)
+   * [ Modelo de Red ](#model-network)
+      * [ Modelo de Red con Pruebas, Seguimiento de Contactos y Cuarentena ](#model-network-ttq)
+* [ Utilización del Código ](#usage)
+   * [ Guía Rápida ](#usage-start)
+   * [ Instalación e Importación del paquete ](#usage-install)
+   * [ Inicialización del Modelo ](#usage-init)
+      * [ Modelo Determinístico ](#usage-init-determ)
+      * [ Modelo de Red ](#usage-init-network)
+   * [ Ejecutando el Modelo ](#usage-run)
+   * [ Accediendo a los datos de Simulación ](#usage-data)
+   * [ Cambiando parámetros en una simulación ](#usage-checkpoints)
    * [ Specifying Interaction Networks ](#usage-networks)
-   * [ Vizualization ](#usage-viz)
+   * [ Visualización ](#usage-viz)
   
 <a name="model"></a>
-## Model Description
+## Descripción del Modelo
 
 <a name="model-seirs"></a>
-### SEIRS Dynamics
+### Dinámica de SEIRS
 
-The foundation of the models in this package is the classic SEIR model of infectious disease. The SEIR model is a standard compartmental model in which the population is divided into **susceptible (S)**, **exposed (E)**, **infectious (I)**, and **recovered (R)** individuals. A susceptible member of the population becomes exposed (latent infection) when coming into contact with an infectious individual, and progresses to the infectious and then recovered states. In the SEIRS model, recovered individuals may become resusceptible some time after recovering (although re-susceptibility can be excluded if not applicable or desired). 
+El fundamento de los modelos en este paquete es el clásico modelo SEIR de enfermedades infecciosas. El modelo SEIR es un modelo compartimental estándar en el cual la población es dividida en **susceptible (S)**, **expuesta (E)**, **infectada (I)**, and **recuperada (R)**. Un miembro susceptible de la población se convierte en expuesto (infección latente) cuando ha tenido contacto con un individuo infectado, y progresa hacia los estados de infección y recuperado. En el modelo SEIRS, individuos recuperados podrían ser suceptiles a recontagiarse después de cierto tiempo de recuperación (aunque la re-susceptibilidad podría ser excluida si se desea o no aplica). 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRS_diagram.png" width="400"></div>
 </p>
 
-The rates of transition between the states are given by the parameters:
-* β: rate of transmission (transmissions per S-I contact per time)
-* σ: rate of progression (inverse of incubation period)
-* γ: rate of recovery (inverse of infectious period)
-* ξ: rate of re-susceptibility (inverse of temporary immunity period; 0 if permanent immunity)
-* μ<sub>I</sub>: rate of mortality from the disease (deaths per infectious individual per time)
+Las tasas de transmisión entre estados están dadas por los parámetros:
+* β: tasa de transmisión (transmisiones por S-I contacto por tiempo)
+* σ: tasa de progresión (inverso del período de incubación)
+* γ: tasa de recuperación (inverso del período de infección)
+* ξ: tasa de re-susceptibilidad (inverso del período de inmunidad temporal; 0 si la inmunidad es permanente)
+* μ<sub>I</sub>: tasa de mortalidad de la enfermedad (muertes por individuos infectados por tiempo)
 
 <a name="model-seirstesting"></a>
 ### SEIRS Dyanmics with Testing
