@@ -180,68 +180,72 @@ El directorio de [```ejemplos```](https://github.com/ryansmcgee/seirsplus/tree/m
 <a name="usage-install"></a>
 ### Instalando e Importando los paquetes
 
-All of the code needed to run the model is imported from the ```models``` module of this package.
+Todo el código necesario para ejecutar el modelo se importa desde el módulo ```models``` de este paquete.
 
-#### Install the package using ```pip```
-The package can be installed on your machine by entering this in the command line:
+#### Instalando el paquete usando ```pip```
+El paquete puede ser instalado en su máquina escribiendo en la command line:
 
 ```> sudo pip install seirsplus```
 
-Then, the ```models``` module can be imported into your scripts as shown here:
+o bien:
+
+```> sudo pip install seirsplus```
+
+Entonces, el módulo ```models``` puede ser importado en los scripts como se muestra a continuación:
 
 ```python
 from seirsplus.models import *
 import networkx
 ```
 
-#### *Alternatively, manually copy the code to your machine*
+#### *Alternativamente, también puede copiar y pegar el código en su máquina*
 
-*You can use the model code without installing a package by copying the ```models.py``` module file to a directory on your machine. In this case, the easiest way to use the module is to place your scripts in the same directory as the module, and import the module as shown here:*
+*Puede usar el código del modelo sin instalar un paquete copiando el archivo del módulo ```models.py``` en un directorio de su máquina. En este caso, la forma más fácil de usar el módulo es colocar sus scripts en el mismo directorio que el módulo e importar el módulo como se muestra aquí: *
 
 ```python
 from models import *
 ```
 <a name="usage-init"></a>
-### Initializing the Model
+### Inicializando el Modelo
 
 <a name="usage-init-determ"></a>
-#### Deterministic Model
+#### Modelo Determinístico
 
-All model parameter values, including the normal and (optional) quarantine interaction networks, are set in the call to the ```SEIRSModel``` constructor. The basic SEIR parameters ```beta```, ```sigma```, ```gamma```, and ```initN``` are the only required arguments. All other arguments represent parameters for optional extended model dynamics; these optional parameters take default values that turn off their corresponding dynamics when not provided in the constructor. 
+Todos los parámetros del modelo, incluidas las redes de interacción de cuarentena normales y opcionales, se establecen en la llamada al constructor ```SEIRSModel``` constructor. Los parámetros básicos de SEIR ```beta```, ```sigma```, ```gamma```, y ```initN``` son los únicos argumentos requeridos. Todos los demás argumentos representan parámetros para la dinámica del modelo extendido opcional; estos parámetros opcionales toman valores predeterminados que desactivan su dinámica correspondiente cuando no se proporcionan en el constructor.
 
-Constructor Argument | Parameter Description | Data Type | Default Value
+Constructor Argumento | Descripción del Parametero | Tipo de Dato | Valor Default
 -----|-----|-----|-----
-```beta   ``` | rate of transmission | float | REQUIRED
-```sigma  ``` | rate of progression | float | REQUIRED
-```gamma  ``` | rate of recovery | float | REQUIRED
-```xi     ``` | rate of re-susceptibility | float | 0
-```mu_I   ``` | rate of infection-related mortality | float | 0
-```mu_0   ``` | rate of baseline mortality | float | 0 
-```nu     ``` | rate of baseline birth | float | 0 
-```beta_D ``` | rate of transmission for detected cases | float | None (set equal to ```beta```) 
-```sigma_D``` | rate of progression for detected cases | float | None (set equal to ```sigma```)  
-```gamma_D``` | rate of recovery for detected cases | float | None (set equal to ```gamma```)  
-```mu_D   ``` | rate of infection-related mortality for detected cases | float | None (set equal to ```mu_I```) 
-```theta_E``` | rate of testing for exposed individuals | float | 0 
-```theta_I``` | rate of testing for infectious individuals | float | 0 
-```psi_E  ``` | probability of positive tests for exposed individuals | float | 0 
-```psi_I  ``` | probability of positive tests for infectious individuals | float | 0
-```initN  ``` | initial total number of individuals | int | 10
-```initI  ``` | initial number of infectious individuals | int | 10
-```initE  ``` | initial number of exposed individuals | int | 0 
-```initD_E``` | initial number of detected infectious individuals | int | 0 
-```initD_I``` | initial number of detected exposed individuals | int | 0 
-```initR  ``` | initial number of recovered individuals | int | 0
-```initF  ``` | initial number of deceased individuals | int | 0
+```beta   ``` | tasa de transmisión | float | REQUIRED
+```sigma  ``` | tasa de progresión | float | REQUIRED
+```gamma  ``` | tasa de recuperación | float | REQUIRED
+```xi     ``` | tasa de re-susceptibilidad | float | 0
+```mu_I   ``` | tasa de mortalidad relacionada a la infección | float | 0
+```mu_0   ``` | tasa de mortalidad base | float | 0 
+```nu     ``` | tasa de nacimiento base | float | 0 
+```beta_D ``` | tasa de transmisión para casos detectados | float | None (set equal to ```beta```) 
+```sigma_D``` | tasa de progresión para detected cases | float | None (set equal to ```sigma```)  
+```gamma_D``` | tasa de recuperación para casos detectados | float | None (set equal to ```gamma```)  
+```mu_D   ``` | tasa de mortalidad de casos detectados | float | None (set equal to ```mu_I```) 
+```theta_E``` | tasa de evaluación de individuos expuestos | float | 0 
+```theta_I``` | tasa de evaluación de individuos infectados | float | 0 
+```psi_E  ``` | probabilidad de tests positivos para individuos expuestos | float | 0 
+```psi_I  ``` | probabilidad de test positivos para individuos infectados | float | 0
+```initN  ``` | Número total de individuos inicial | int | 10
+```initI  ``` | Número total de individuos infectados | int | 10
+```initE  ``` | Número total de individuos expuestos | int | 0 
+```initD_E``` | Número total de individuos infectados detectados | int | 0 
+```initD_I``` | Número total de individuos detectados expuestos | int | 0 
+```initR  ``` | Número total de individuos recuperados | int | 0
+```initF  ``` | Número total de individuos fallecidos | int | 0
 
-##### Basic SEIR
+##### SEIR Básico
 
 ```python
 model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, initN=100000, initI=100)
 ```
 
 
-##### Basic SEIRS
+##### SEIRS Básico
 
 ```python
 model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, xi=0.001, initN=100000, initI=100)
