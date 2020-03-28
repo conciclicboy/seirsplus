@@ -389,40 +389,40 @@ Este modelo SEIRS + también implementa dinámicas correspondientes a las prueba
 
 Los escenarios de epidemia de interés a menudo implican redes de interacción que cambian con el tiempo. Se pueden definir y utilizar múltiples redes de interacción en diferentes momentos en la simulación del modelo utilizando la función de puntos de control (descrita en la sección a continuación).
 
-**_Note:_** *Simulation time increases with network size. Small networks simulate quickly, but have more stochastic volatility. Networks with ~10,000 are large enough to produce per-capita population dynamics that are generally consistent with those of larger networks, but small enough to simulate quickly. We recommend using networks with ~10,000 nodes for prototyping parameters and scenarios, which can then be run on larger networks if more precision is required.*
+**_Nota:_** *El tiempo de simulación aumenta con el tamaño de la red. Las redes pequeñas simulan rápidamente, pero tienen más volatilidad estocástica. Las redes con ~ 10,000 son lo suficientemente grandes como para producir dinámicas de población per cápita que generalmente son consistentes con las de redes más grandes, pero lo suficientemente pequeñas como para simular rápidamente. Recomendamos el uso de redes con ~ 10,000 nodos para la creación de prototipos de parámetros y escenarios, que luego se pueden ejecutar en redes más grandes si se requiere más precisión*
 
-#### Custom Exponential Graph
+#### Grafo Exponencial Personalizado
 
-Human interaction networks often resemble scale-free power law networks with exponential degree distributions.
-This package includes a ```custom_exponential_graph()``` convenience funciton that generates power-law-like graphs that have degree distributions with two exponential tails. The method of generating these graphs also makes it easy to remove edges from a reference graph and decrease the degree of the network, which is useful for generating networks representing social distancing and quarantine conditions.
+Las redes de interacción humana a menudo se asemejan a redes sin escala con distribuciones de grados exponenciales.
+Este paquete incluye una función que genera grafos de distribuciones de grados exponenciales y dos colas exponenciales llamada ```custom_exponential_graph()```. El método de generar estos gráficos también facilita la eliminación de aristas de un grafo de referencia y disminuye el grado de la red, lo cual es útil para generar redes que representan el distanciamiento social y las condiciones de cuarentena.
 
-Common algorithms for generating power-law graphs, such as the Barabasi-Albert preferential attachment algorithm, produce graphs that have a minimum degree; that is, no node has fewer than *m* edges for some value of *m*, which is unrealistic for interaction networks. This ```custom_exponential_graph()``` function simply produces graphs with degree distributions that have a peak near their mean and exponential tails in the direction of both high and low degrees. (No claims about the realism or rigor of these graphs are made.)
+Algoritmos comunes para generar grafos de ley de potencia, como el algoritmo de apego preferencial Barabasi-Albert, producen grafos que tienen un grado mínimo; es decir, ningún nodo tiene menos de *m* aristas para algún valor de *m*, lo que no es realista para las redes de interacción. La función ```custom_exponential_graph()``` simplemente produce grafos con distribuciones de grados que tienen un pico cerca de sus medias y colas exponencial en la dirección de los grados alto y bajo. (No se hacen afirmaciones sobre el realismo o el rigor de estos gráficos).
 
 <img align="right" src="https://github.com/ryansmcgee/seirsplus/blob/master/images/degreeDistn_compareToBAGraph1.png" height="250">
 
-This function generates graphs using the following algorithm:
-* Start with a Barabasi-Albert preferential attachment power-law graph (or any graph that is optionally provided by the user).
-* For each node:
-    * Count the number of neighbors *n* of the node 
-    * Draw a random number *r* from an exponential distribution with some mean=```scale```. If *r>n*, set *r=n*. 
-    * Randomly select *r* of this node’s neighbors to keep, delete the edges to all other neighbors. 
-When starting from a Barabasi-Albert (BA) graph, this generates a new graphs that have a peak at their mean and approximately exponential tails in both directions, as shown to the right.
+La función genera grafos usando el siguiente algoritmo:
+* Inicia con un grafo del tipo Barabasi-Albert (o cualquier gráfico que sea opcionalmente provisto por el usuario).
+* Para cada nodo:
+    * Contar el número de vecinos *n*  del nodo 
+    * Genera un número aleatorio *r* de una distribución exponencial con media=```scale```. Si *r>n*, actualizar a *r=n*. 
+    * Seleccionar aleatoriamente *r* vecinos del nodo que se mantendrán, borrar las aristas de todos los otros vecinos. 
+Cuando se inicialice el grafo Barabasi-Albert (BA), esto genera una nueva gráfica que tiene un pico en su media y colas aproximadamente exponenciales en ambas direcciones, como se muestra a la derecha.
 
 
 <img align="right" src="https://github.com/ryansmcgee/seirsplus/blob/master/images/degreeDistn_compareToBAGraph4.png" height="250">
 
-Since this algorithm starts with a graph with defined connections and makes a new graph by breaking some number of connections, it also makes it easy to take an existing graph and make a subgraph of it that also has exponential-ish tails and a left-shifted mean. This can be used for generating social distancing and quarantine subgraphs. The amount of edge breaking/degree reduction is modulated by the ```scale``` parameter. To the right are some examples of graphs with progressively lower mean degree generated using the same reference Barabasi-Albert graph, which therefore are all subsets of a common reference set of edges.
+Como este algoritmo comienza con un grafo con conexiones definidas y crea un nuevo grafo al romper un cierto número de conexiones, también facilita tomar un gráfico existente y hacer un subgrafo que también tiene colas exponenciales y media movida a la izquierda. Esto se puede utilizar para generar subgrafos de distanciamiento social y cuarentena. La magnitud de la ruptura de reducción de aristas se modula mediante el parámetro ```scale```. A la derecha hay algunos ejemplos de gráficos con un grado medias progresivamente más pequeñas generadas utilizando el mismo grafo de referencia (del tipo Barabasi-Albert), que son resultados particulares del conjunto de aristas iniciales.
 
-The ```custom_exponential_graph()``` function has the following arguments
+La función ```custom_exponential_graph()``` tiene los siguientes argumentos
 
 base_graph=None, scale=100, min_num_edges=0, m=9, n=None
-Argument | Description | Data Type | Default Value
+Argumento | Descripción | Tipo de Dato | Valor por Default
 -----|-----|-----|-----
-```base_graph``` | Graph to use as the starting point for the algorithm. If ```None```, generate a Barabasi-Albert graph to use as the starting point using arguments ```n``` and ```m``` as parameters | ```networkx``` ```Graph``` object | ```None```
-```scale``` | Mean of the exponential distribution used to draw ```base_graph``` to keep. Large values result in graphs that approximate the original ```base_graph```, small values result in sparser subgraphs of ```base_graph```  | numeric | 100
-```min_num_edges``` | Minimum number of edges that all nodes must have in the generated graph | int | 0
-```n``` | *n* parameter for teh Barabasi-Albert algorithm (number of nodes to add) | int | ```None``` (value required when no ```base_graph``` is given)
-```m``` | *m* parameter for the Barabasi-Albert algorithm (number of edges added with each added node) | int | 9
+```base_graph``` | Grafo para inicializar el algoritmo. Si ```None```, generará un grafo del tipo Barabasi-Albert para usar como el punto de partida con parámetros ```n``` y ```m``` | objeto ```networkx``` ```Graph``` | ```None```
+```scale``` | Media de la distribución exponencial utilizada para generar el ```base_graph``` a manterner. Valores grandes darán como resultado grafos que se aproximan al ```base_graph``` original, y valores muy pequeños darán como resultado en grafos más dispersos que  el original ```base_graph```  | numeric | 100
+```min_num_edges``` | Número mínimo de aristas que todos los nodos deben tener en el grafo generado | int | 0
+```n``` | Parámetro *n* del algoritmo Barabasi-Albert (número de nodos a añadir) | int | ```None``` (valor requerido cuando no se da un grafo inicial ```base_graph```)
+```m``` | Parámetro *m* del algoritmo Barabasi-Albert (número de aristas a añadir a cada nodo) | int | 9
 
 <a name="usage-checkpoints"></a>
 ### Changing parameters during a simulation
