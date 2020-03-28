@@ -138,10 +138,10 @@ Cada nodo *i* tiene un estado *X<sub>i</sub>* que se actualiza de acuerdo a las 
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRSnetworktesting_transitions.png" width="800"></div>
 </p>
 
-where *δ<sub>Xi=A</sub>=1* if the state of *X<sub>i</sub>* is *A*, or *0* if not, and where *C<sub>G</sub>(i)* and *C<sub>Q</sub>(i)* denotes the set of close contacts and quarantine contacts of node *i*, respectively. For large populations and *p=1*, this stochastic model approaches the same dynamics as the deterministic SEIRS model (sans contact tracing, which is not included in the uniformly-mixed model).
+donde *δ<sub>Xi=A</sub>=1* si el estado de  *X<sub>i</sub>* es *A*, o *0* si no lo es, y donde *C<sub>G</sub>(i)* y *C<sub>Q</sub>(i)* denota el conjunto de contactos cercanos y contactos de cuarentena del nodo *i*, respectivamente. Para poblaciones grandes y *p=1*, este modelo estocástico aborda la misma dinámica que el modeo determinístico SEIRS (sin rastreo de contactos, que no estpa incluido en el modelo uniforme-mixto).
 
 <a name="usage"></a>
-## Code Usage
+## Utilización de Código
 
 This package was designed with broad usability in mind. Complex scenarios can be simulated with very few lines of code or, in many cases, no new coding or knowledge of python by simply modifying the parameter values in the example notebooks provided. See the Quick Start section and the rest of this documentation for more details.
 
