@@ -118,21 +118,22 @@ Esta implementación se basa en el trabajo de Dottori et al. (2015).
 * Dottori, M. and Fabricius, G., 2015. SIR model on a dynamical network and the endemic state of an infectious disease. Physica A: Statistical Mechanics and its Applications, 434, pp.25-35.
 
 <a name="model-network-ttq"></a>
-#### Network Model with Testing, Contact Tracing, and Quarantining
+#### Modelo de Red con Pruebas de la Enfermedad, Rastreo de Contactos y Cuarentena
 
-##### Testing & Contact Tracing
+##### Pruebas y Rstreo de Contactos
 
-As with the deterministic model, exposed and infectious individuals are tested at rates *θ<sub>E</sub>* and *θ<sub>I</sub>*, respectively, and test positively for infection with rates *ψ<sub>E</sub>* and *ψ<sub>I</sub>*, respectively (the false positive rate is assumed to be zero, so susceptible individuals never test positive). Testing positive moves an individual into the appropriate detected case state (*D<sub>E</sub>* or *D<sub>I</sub>*), where rates of transmission, progression, recovery, and/or mortality (as well as network connectivity in the network model) may be different than those of undetected cases.
+Como en el modelo determinístico, individuos expuestos e infectados son evaluados a tasas *θ<sub>E</sub>* y *θ<sub>I</sub>*, respectivamente, y evaluados positivamente por infecciones a tasas *ψ<sub>E</sub>* y *ψ<sub>I</sub>*, respectivamente (la tasa de falsos positivos es asumida como cero, así que personas susceptibles nunca dan positivo). Al evaluar positivamente un individuo lo mueve al estado de caso detectado (*D<sub>E</sub>* o *D<sub>I</sub>*), donde las tasas de transmisión, progresión, recuperación, y/o mortalidad (así como la conectividad de la red en el modelo) puede ser diferentes que en los casos no detectados.
 
-Consideration of interaction networks allows us to model contact tracing, where the close contacts of an positively-tested individual are more likely to be tested in response. In this model, an individual is tested due to contact tracing at a rate equal to *φ* times the number of its close contacts who have tested positively.
+Considerar la interacción de la red nos permite modelar el rastreo de contactos, donde los contactos más cercanos de un individuo detectado como positivo son más propensos a ser evaluados a la enfermedad. En este modleo, un individuo se examina debido al rastreo de contactos a una tasa de *φ* veces el número de contactos que ha dado positivo.
 
-##### Quarantining
+##### Cuarentena
 
 <img align="right" src="https://github.com/ryansmcgee/seirsplus/blob/master/images/network_contacts_quarantine.png" height="250">
+Consideremos también otro grafo **_Q_** el cual representa las interacciones que cada individuo tiene si ellos son evaluados como contagiados de la enfermedad (por ejemplo individuos en *D<sub>E</sub>* o *D<sub>I</sub>* states) y entran en cuarentena.
+La cuarentena tiene el efecto de dejar caer una fracción de las aristas que conectan al individuo en cuarentena con otros (de acuerdo con una regla de elección del usuario al generar el grafo *Q*). Las aristas de *Q* (resaltados en púrpura) para cada individuo son entonces un subconjunto de las aristas normales de * G * para ese individuo. El conjunto de nodos adyacentes a un individuo en cuarentena define su conjunto de "contactos en cuarentena" (resaltados en púrpura). En un momento dado, un individuo en cuarentena puede entrar en contacto con otro individuo en esa cuarentena con probabilidad *(1-p) β <sub> D </sub>*. Una persona en cuarentena también puede ponerse en contacto con una persona aleatoria desde cualquier lugar de la red con una tasa * qpβ <sub> D </sub> *.
 
-Now we also consider another graph **_Q_** which represents the interactions that each individual has if they test positively for the disease (i.e., individuals in the *D<sub>E</sub>* or *D<sub>I</sub>* states) and enter into a form of quarantine. The quarantine has the effect of dropping some fraction of the edges connecting the quarantined individual to others (according to a rule of the user's choice when generating the graph *Q*). The edges of *Q* (highlighted in purple) for each individual are then a subset of the normal edges of *G* for that individual. The set of nodes that are adjacent to a quarantined individual define their set of "quarantine contacts" (highlighted in purple). At a given time, a quarantined individual may come into contact with another individual in this quarantine contact set with probability *(1-p)β<sub>D</sub>*. A quarantined individual may also be come in contact with a random individual from anywhere in the network with rate *qpβ<sub>D</sub>*.
+Cada nodo *i* tiene un estado *X<sub>i</sub>* que se actualiza de acuerdo a las siguientes probabilidades de trasición:
 
-Each node *i* has a state *X<sub>i</sub>* that updates according to the following probability transition rates: 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRSnetworktesting_transitions.png" width="800"></div>
 </p>
