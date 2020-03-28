@@ -76,7 +76,7 @@ Las tasad de transición entre estados están dadas por los parámetros:
 <a name="model-determ"></a>
 ### Modelo Determinístico
 
-La evolución de la dinpamica de SEIRS descrita arriba puede ser explicada por el siguiente sistema de ecuaciones diferenciales. Es importante resaltar que esta versión del modelo es determinística y asume una población uniformemente distribuida. 
+La evolución de la dinámica de SEIRS descrita arriba puede ser explicada por el siguiente sistema de ecuaciones diferenciales. Es importante resaltar que esta versión del modelo es determinística y asume una población uniformemente distribuida. 
 
 #### Dinámica de SEIRS
 
@@ -150,14 +150,15 @@ No se deje engañar por la longitud del archivo README, ejecutar estos modelos e
 from seirsplus.models import *
 import networkx
 
-numNodes = 10000
-baseGraph    = networkx.barabasi_albert_graph(n=numNodes, m=9)
-G_normal     = custom_exponential_graph(baseGraph, scale=100)
-# Social distancing interactions:
+numNodes = 10000 # Número de nodos
+baseGraph    = networkx.barabasi_albert_graph(n=numNodes, m=9) # Grafo inicial
+G_normal     = custom_exponential_graph(baseGraph, scale=100) # Exponencial
+# Interacciones con distanciamiento social:
 G_distancing = custom_exponential_graph(baseGraph, scale=10)
-# Quarantine interactions:
+# Interacciones con Cuarentena:
 G_quarantine = custom_exponential_graph(baseGraph, scale=5)
 
+#Modelo SERIRS de Red
 model = SEIRSNetworkModel(G=G_normal, beta=0.155, sigma=1/5.2, gamma=1/12.39, mu_I=0.0004, p=0.5,
                           Q=G_quarantine, beta_D=0.155, sigma_D=1/5.2, gamma_D=1/12.39, mu_D=0.0004,
                           theta_E=0.02, theta_I=0.02, phi_E=0.2, phi_I=0.2, psi_E=1.0, psi_I=1.0, q=0.5,
@@ -165,8 +166,10 @@ model = SEIRSNetworkModel(G=G_normal, beta=0.155, sigma=1/5.2, gamma=1/12.39, mu
 
 checkpoints = {'t': [20, 100], 'G': [G_distancing, G_normal], 'p': [0.1, 0.5], 'theta_E': [0.02, 0.02], 'theta_I': [0.02, 0.02], 'phi_E':   [0.2, 0.2], 'phi_I':   [0.2, 0.2]}
 
+#Corriendo la simulación para T=300
 model.run(T=300, checkpoints=checkpoints)
 
+# Mostrando las infecciones
 model.figure_infections()
 ```
 
@@ -251,7 +254,7 @@ model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, initN=100000, initI=1
 model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, xi=0.001, initN=100000, initI=100)
 ```
 
-##### SEIR with testing and different progression rates for detected cases (```theta``` and ```psi``` testing params > 0, rate parameters provided for detected states)
+##### SEIR con pruebas de enfermedades y diferentes tasas de progresión para casos detectados (donde los parámetros de evaluación ```theta``` y ```psi``` > 0, y se proporcionan parámetros para casos detectados)
 
 ```python
 model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, initN=100000, initI=100,
@@ -268,33 +271,33 @@ Todos los valores de los parámetros del modelo, incluida la red de interacción
 
 Constructor Argument | Parameter Description | Data Type | Default Value
 -----|-----|-----|-----
-```G      ``` | graph specifying the interaction network | ```networkx Graph``` or ```numpy 2d array```  | REQUIRED 
-```beta   ``` | rate of transmission | float | REQUIRED
-```sigma  ``` | rate of progression | float | REQUIRED
-```gamma  ``` | rate of recovery | float | REQUIRED
-```xi     ``` | rate of re-susceptibility | float | 0
-```mu_I   ``` | rate of infection-related mortality | float | 0
-```mu_0   ``` | rate of baseline mortality | float | 0 
-```nu     ``` | rate of baseline birth | float | 0 
-```p      ``` | probability of global interactions (network locality) | float | 0
-```Q      ``` | graph specifying the quarantine interaction network | ```networkx Graph``` or ```numpy 2d array``` | None 
-```beta_D ``` | rate of transmission for detected cases | float | None (set equal to ```beta```) 
-```sigma_D``` | rate of progression for detected cases | float | None (set equal to ```sigma```)  
-```gamma_D``` | rate of recovery for detected cases | float | None (set equal to ```gamma```)  
-```mu_D   ``` | rate of infection-related mortality for detected cases | float | None (set equal to ```mu_I```) 
-```theta_E``` | rate of testing for exposed individuals | float | 0 
-```theta_I``` | rate of testing for infectious individuals | float | 0 
-```phi_E  ``` | rate of contact tracing testing for exposed individuals | float | 0 
-```phi_I  ``` | rate of contact tracing testing for infectious individuals | float | 0 
-```psi_E  ``` | probability of positive tests for exposed individuals | float | 0 
-```psi_I  ``` | probability of positive tests for infectious individuals | float | 0
-```q      ``` | probability of global interactions for quarantined individuals | float | 0
-```initI  ``` | initial number of infectious individuals | int | 10
-```initE  ``` | initial number of exposed individuals | int | 0 
-```initD_E``` | initial number of detected infectious individuals | int | 0 
-```initD_I``` | initial number of detected exposed individuals | int | 0 
-```initR  ``` | initial number of recovered individuals | int | 0
-```initF  ``` | initial number of deceased individuals | int | 0
+```G      ``` | grafo expecificando la red de interacciones | ```networkx Graph``` or ```numpy 2d array```  | REQUIRED 
+```beta   ``` | tasa de transmisión | float | REQUIRED
+```sigma  ``` | tasa de progresión | float | REQUIRED
+```gamma  ``` | tasa de recuperación | float | REQUIRED
+```xi     ``` | tasa de re-susceptibilidad | float | 0
+```mu_I   ``` | tasa de mortalidad de infectados | float | 0
+```mu_0   ``` | tasa de mortalidad base | float | 0 
+```nu     ``` | tasa de nacimiento base | float | 0 
+```p      ``` | probabilidad de interacciones globales (red focalizada) | float | 0
+```Q      ``` | grafo especificando el efecto de la cuarentena en la red de interacciones | ```networkx Graph``` or ```numpy 2d array``` | None 
+```beta_D ``` | tasa de transmisión de casos detectados | float | None (set equal to ```beta```) 
+```sigma_D``` | tasa de progresión de casos detectados | float | None (set equal to ```sigma```)  
+```gamma_D``` | tasa de recuperación de casos detectados | float | None (set equal to ```gamma```)  
+```mu_D   ``` | tasa de mortalidad de infectados de casos detectados | float | None (set equal to ```mu_I```) 
+```theta_E``` | tasa de examinación para individuos expuestos | float | 0 
+```theta_I``` | tasa de examinación para individuos infectados | float | 0 
+```phi_E  ``` | tasa de rastreo de contactos para individuos expuestos | float | 0 
+```phi_I  ``` | tasa de rastreo de contactos para individuos infectados | float | 0 
+```psi_E  ``` | probabilidad de examen positivo para individuos expuestos| float | 0 
+```psi_I  ``` | probabilidad de examen positivo para individuos infectados| float | 0
+```q      ``` | probabilidad de interacciones globales para individuos en cuarentena | float | 0
+```initI  ``` | número inicial de individuos infectados | int | 10
+```initE  ``` | número inicial de individuos expuestos | int | 0 
+```initD_E``` | número inicial de individuos infectados detectados | int | 0 
+```initD_I``` | número inicial de individuos expuestos detectados | int | 0 
+```initR  ``` | número inicial de individuos recuperados | int | 0
+```initF  ``` | número inicial de individuos fallecidos | int | 0
 
 ##### Modelo básico SEIR en una red
 
@@ -337,22 +340,22 @@ model = SEIRSNetworkModel(G=myNetwork, beta=0.155, sigma=1/5.2, gamma=1/12.39, p
 <a name="usage-run"></a>
 ### Corriendo el Modelo
 
-Stochastic network SEIRS dynamics are simulated using the Gillepsie algorithm.
+Las dinámicas de una red estocástica del modelo SEIS son simuladas usando el algoritmo de Gillepsie.
 
-Once a model is initialized, a simulation can be run with a call to the following function:
+Una vez el modelo esté inicializado, la simulación se puede correr llamando la siguiente función:
 
 ```python
 model.run(T=300)
 ```
 
-The ```run()``` function has the following arguments
+La función ```run()``` tiene los siguientes argumentos
 
-Argument | Description | Data Type | Default Value
+Argumento | Descripción | Tipo de Dato | Valor Default
 -----|-----|-----|-----
-```T``` | runtime of simulation | numeric | REQUIRED
-```checkpoints``` | dictionary of checkpoint lists (see section below) | dictionary | ```None```
-```print_interval``` | (network model only) time interval to print sim status to console | numeric | 10
-```verbose``` | if ```True```, print count in each state at print intervals, else just the time | bool | ```False```
+```T``` | tiempo de simulación | numeric | REQUIRED
+```checkpoints``` | dicionario de checkpoints (ver la siguiente sección) | dictionary | ```None```
+```print_interval``` | (solo para modelo de red) intervalo de tiempo a imprimir el estatus de la simulación en la consola | numeric | 10
+```verbose``` | Si es ```True```, imprime el conteo en cada estado en el intervalo de impresión, si es falso solo imprime el tiempo | bool | ```False```
 
 <a name="usage-run"></a>
 ### Accessing Simulation Data
