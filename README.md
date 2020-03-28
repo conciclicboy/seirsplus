@@ -120,7 +120,7 @@ Esta implementación se basa en el trabajo de Dottori et al. (2015).
 <a name="model-network-ttq"></a>
 #### Modelo de Red con Pruebas de la Enfermedad, Rastreo de Contactos y Cuarentena
 
-##### Pruebas y Rstreo de Contactos
+##### Pruebas y Rastreo de Contactos
 
 Como en el modelo determinístico, individuos expuestos e infectados son evaluados a tasas *θ<sub>E</sub>* y *θ<sub>I</sub>*, respectivamente, y evaluados positivamente por infecciones a tasas *ψ<sub>E</sub>* y *ψ<sub>I</sub>*, respectivamente (la tasa de falsos positivos es asumida como cero, así que personas susceptibles nunca dan positivo). Al evaluar positivamente un individuo lo mueve al estado de caso detectado (*D<sub>E</sub>* o *D<sub>I</sub>*), donde las tasas de transmisión, progresión, recuperación, y/o mortalidad (así como la conectividad de la red en el modelo) puede ser diferentes que en los casos no detectados.
 
@@ -131,7 +131,7 @@ Considerar la interacción de la red nos permite modelar el rastreo de contactos
 <img align="right" src="https://github.com/ryansmcgee/seirsplus/blob/master/images/network_contacts_quarantine.png" height="250">
 
 Consideremos también otro grafo **_Q_** el cual representa las interacciones que cada individuo tiene si ellos son evaluados como contagiados de la enfermedad (por ejemplo individuos en *D<sub>E</sub>* o *D<sub>I</sub>* states) y entran en cuarentena.
-La cuarentena tiene el efecto de dejar caer una fracción de las aristas que conectan al individuo en cuarentena con otros (de acuerdo con una regla de elección del usuario al generar el grafo *Q*). Las aristas de *Q* (resaltados en púrpura) para cada individuo son entonces un subconjunto de las aristas normales de * G * para ese individuo. El conjunto de nodos adyacentes a un individuo en cuarentena define su conjunto de "contactos en cuarentena" (resaltados en púrpura). En un momento dado, un individuo en cuarentena puede entrar en contacto con otro individuo en esa cuarentena con probabilidad *(1-p) β <sub> D </sub>*. Una persona en cuarentena también puede ponerse en contacto con una persona aleatoria desde cualquier lugar de la red con una tasa *qpβ <sub> D </sub>*.
+La cuarentena tiene el efecto de dejar caer una fracción de las aristas que conectan al individuo en cuarentena con otros (de acuerdo con una regla de elección del usuario al generar el grafo *Q*). Las aristas de *Q* (resaltados en púrpura) para cada individuo son entonces un subconjunto de las aristas normales de * G * para ese individuo. El conjunto de nodos adyacentes a un individuo en cuarentena define su conjunto de "contactos en cuarentena" (resaltados en púrpura). En un momento dado, un individuo en cuarentena puede entrar en contacto con otro individuo en esa cuarentena con probabilidad *(1-p) β <sub> D </sub>*. Una persona en cuarentena también puede ponerse en contacto con una persona aleatoria desde cualquier lugar de la red con una tasa *qp β<sub>D</sub>*.
 
 Cada nodo *i* tiene un estado *X<sub>i</sub>* que se actualiza de acuerdo a las siguientes probabilidades de trasición:
 
