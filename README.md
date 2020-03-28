@@ -388,7 +388,26 @@ La red de interacción puede ser especificada por un objeto **```Graph```** de l
 Este modelo SEIRS + también implementa dinámicas correspondientes a las pruebas de individuos para detectar la enfermedad y el traslado de individuos con infecciones detectadas a un estado en el que su tasa de recuperación, mortalidad, etc. puede ser diferente. Además, dado que este modelo considera a los individuos en una red de interacción, se puede especificar un gráfico separado que define las interacciones para los individuos con casos detectados (es decir, la red de "interacción de cuarentena").
 
 Los escenarios de epidemia de interés a menudo implican redes de interacción que cambian con el tiempo. Se pueden definir y utilizar múltiples redes de interacción en diferentes momentos en la simulación del modelo utilizando la función de puntos de control (descrita en la sección a continuación).
-<<exponential tails in both directions, as shown to the right.
+
+**_Note:_** *Simulation time increases with network size. Small networks simulate quickly, but have more stochastic volatility. Networks with ~10,000 are large enough to produce per-capita population dynamics that are generally consistent with those of larger networks, but small enough to simulate quickly. We recommend using networks with ~10,000 nodes for prototyping parameters and scenarios, which can then be run on larger networks if more precision is required.*
+
+#### Custom Exponential Graph
+
+Human interaction networks often resemble scale-free power law networks with exponential degree distributions.
+This package includes a ```custom_exponential_graph()``` convenience funciton that generates power-law-like graphs that have degree distributions with two exponential tails. The method of generating these graphs also makes it easy to remove edges from a reference graph and decrease the degree of the network, which is useful for generating networks representing social distancing and quarantine conditions.
+
+Common algorithms for generating power-law graphs, such as the Barabasi-Albert preferential attachment algorithm, produce graphs that have a minimum degree; that is, no node has fewer than *m* edges for some value of *m*, which is unrealistic for interaction networks. This ```custom_exponential_graph()``` function simply produces graphs with degree distributions that have a peak near their mean and exponential tails in the direction of both high and low degrees. (No claims about the realism or rigor of these graphs are made.)
+
+<img align="right" src="https://github.com/ryansmcgee/seirsplus/blob/master/images/degreeDistn_compareToBAGraph1.png" height="250">
+
+This function generates graphs using the following algorithm:
+* Start with a Barabasi-Albert preferential attachment power-law graph (or any graph that is optionally provided by the user).
+* For each node:
+    * Count the number of neighbors *n* of the node 
+    * Draw a random number *r* from an exponential distribution with some mean=```scale```. If *r>n*, set *r=n*. 
+    * Randomly select *r* of this node’s neighbors to keep, delete the edges to all other neighbors. 
+When starting from a Barabasi-Albert (BA) graph, this generates a new graphs that have a peak at their mean and approximately exponential tails in both directions, as shown to the right.
+
 
 <img align="right" src="https://github.com/ryansmcgee/seirsplus/blob/master/images/degreeDistn_compareToBAGraph4.png" height="250">
 
