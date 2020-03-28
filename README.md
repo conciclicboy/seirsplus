@@ -3,7 +3,7 @@
 Clonado del repositorio original de [SEIRS Model](https://github.com/ryansmcgee/seirsplus).
 <br>
 
-Este paquete implementa el modelo dinámico de enfermedades infecciosas generalizado SEIRS con extensiones que modelan el efecto de factores incluyendo la estructura poblacional, distancia social, pruebas de la enfermedad, seguimiento de contactos y cuarentena de contactos detectados.
+Este paquete implementa el modelo dinámico de enfermedades infecciosas generalizado SEIRS con extensiones que modelan el efecto de factores incluyendo la estructura poblacional, distancia social, pruebas de la enfermedad, rastreo de contactos y cuarentena de contactos detectados.
 
 Notablemente, este paquete incluye una implementación estocástica de los modelos en redes dinámicas.
 
@@ -13,7 +13,7 @@ Notablemente, este paquete incluye una implementación estocástica de los model
    * [ Dinámica de SEIRS con pruebas ](#model-seirstesting)
    * [ Modelo Determinístico ](#model-determ)
    * [ Modelo de Red ](#model-network)
-      * [ Modelo de Red con Pruebas, Seguimiento de Contactos y Cuarentena ](#model-network-ttq)
+      * [ Modelo de Red con Pruebas, Rastreo de Contactos y Cuarentena ](#model-network-ttq)
 * [ Utilización del Código ](#usage)
    * [ Guía Rápida ](#usage-start)
    * [ Instalación e Importación del paquete ](#usage-install)
@@ -97,23 +97,24 @@ donde *S*, *E*, *I*, *D<sub>E</sub>*, *D<sub>I</sub>*, *R*, y *F* son los númer
 <a name="model-network"></a>
 ### Modelo de Red
 
-El modelo SEIRS estándr captura caracterpisticas importantes de la dinámica de las infecciones, but it is deterministic and assumes uniform mixing of the population (every individual in the population is equally likely to interact with every other individual). However, it is often important to consider stochastic effects and the structure of contact networks when studying disease transmission and the effect of interventions such as social distancing and contact tracing.
+El modelo SEIRS estándr captura caracterpisticas importantes de la dinámica de las infecciones, pero es determinístico y asume una distribución poblacional uniforme (donde cada individuo es igualmente propenso a interactuar con otro individuo). Sin embargo, es importante considerar los efectos estocásticos y la estructura de la red de contacto cuando se estudia transmisión de enfermedades y el efecto de intervenciones como distanciamiento social y rastreo de contactos.
 
-This package includes implementation of the SEIRS dynamics on stochastic dynamical networks. This avails analysis of the realtionship between network structure and effective transmission rates, including the effect of network-based interventions such as social distancing, quarantining, and contact tracing.
+Este paquete incluye la implementación de la dinámica de SEIRS en redes estocásticas con comportamiento dinámico. 
+Esto sirve para analizar la relación entre la estructura de la red y las tasas de transmisión efectivas, incluido el efecto de las intervenciones basadas en la restricción de la red de contagios, como el distanciamiento social, la cuarentena y el rastreo de contactos.
 
 <img align="right" src="https://github.com/ryansmcgee/seirsplus/blob/master/images/network_contacts.png" height="250">
 
-Consider a graph **_G_** representing individuals (nodes) and their interactions (edges). Each individual (node) has a state (*S, E, I, D<sub>E</sub>, D<sub>I</sub>, R, or F*). The set of nodes adjacent (connected by an edge) to an individual defines their set of "close contacts" (highlighted in black).  At a given time, each individual makes contact with a random individual from their set of close contacts with probability *(1-p)β* or with a random individual from anywhere in the network (highlighted in blue) with probability *pβ*. The latter global contacts represent individuals interacting with the population at large (i.e., individuals outside of ones social circle, such as on public transit, at an event, etc.) with some probability. When a susceptible individual interacts with an infectious individual they become exposed. The parameter *p* defines the locality of the network: for *p=0* an individual only interacts with their close contacts, while *p=1* represents a uniformly mixed population. Social distancing interventions may increase the locality of the network (i.e., decrease *p*) and/or decrease local connectivity of the network (i.e., decrease the degree of individuals).
+Considere un grafo **_G_** representando individuos (nodos) y sus interacciones (aristas/lados). Cada individuo (nodo) tiene un estado (*S, E, I, D<sub>E</sub>, D<sub>I</sub>, R, or F*). El conjunto de nodos adyacentes (conectado por una arista) a un individuo define el conjunto de "contactos cercanos" (resaltados en negro). En determinado instante, cada individuo hace contacto con un indivduo aleatorio de su red de contactos cercanos con probabilidad *(1-p)β* o con un individuo aleatorio de toda cualquier punto de la red (resaltado en azul) con probabilidad *pβ*. Los últimos contactos globales representan individuos interactuando con la población en general (es decir, individuos fuera del círculo social, como en el transporte público, en un evento, etc.) con cierta probabilidad. Cuando un individuo susceptible interactúa con un individuo infeccioso, queda expuesto. El parámetro *p* define la localización de la red: para *p=0* un individuo solo interactua con sus contactos cercanos, mientras que *p=1* representa una población mezclada uniformemente. Las intervenciones de distanciamiento social podrían incrementar la focalización de la red (reducir *p*) y/o reducir la conectividad local de la red (reducir el grado de los individuos).
 
-Each node *i* has a state *X<sub>i</sub>* that updates according to the following probability transition rates: 
+Cada nodo *i* tiene un estado *X<sub>i</sub>* que se actualiza de acuerdo a las siguientes probabilidades de transición: 
 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRSnetwork_transitions.png" width="500"></div>
 </p>
 
-where *δ<sub>Xi=A</sub> = 1* if the state of *X_i* is *A*, or *0* if not, and where *C<sub>G</sub>(i)* denotes the set of close contacts of node *i*. For large populations and *p=1*, this stochastic model approaches the same dynamics as the deterministic SEIRS model.
+donde *δ<sub>Xi=A</sub> = 1* si el estado de *X_i* es *A*, o *0* si no lo es, y donde *C<sub>G</sub>(i)* denota el conjunto de contactos cercanos al nodo *i*. Para poblaciones grandes y *p=1*, este modelo estocástico aborda la misma dinámica como el modelo determinístico SEIRS.
 
-This implementation builds on the work of Dottori et al. (2015).
+Esta implementación se basa en el trabajo de Dottori et al. (2015).
 * Dottori, M. and Fabricius, G., 2015. SIR model on a dynamical network and the endemic state of an infectious disease. Physica A: Statistical Mechanics and its Applications, 434, pp.25-35.
 
 <a name="model-network-ttq"></a>
