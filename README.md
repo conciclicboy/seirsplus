@@ -143,9 +143,9 @@ donde *δ<sub>Xi=A</sub>=1* si el estado de  *X<sub>i</sub>* es *A*, o *0* si no
 <a name="usage"></a>
 ## Utilización de Código
 
-This package was designed with broad usability in mind. Complex scenarios can be simulated with very few lines of code or, in many cases, no new coding or knowledge of python by simply modifying the parameter values in the example notebooks provided. See the Quick Start section and the rest of this documentation for more details.
+Este paquete está diseñado para ser utilizado ampliamente. Escenarios complejos pueden ser simulados con muy pocas líneas de código o, en muchos casos, sin ninguna codificación o conocimientos de python simplemente modificando los parámetros en las notebooks de ejemplo. Vea la sección Quick Start y el resto de la documentación para más detalles.
 
-Don't be fooled by the length of the README, running these models is quick and easy. The package does all the hard work for you. As an example, here's a complete script that simulates the SEIRS dyanmics on a network with social distancing, testing, contact tracing, and quarantining in only 10 lines of code (see the [example notebooks](https://github.com/ryansmcgee/seirsplus/tree/master/examples) for more explanation of this example):
+No se deje engañar por la longitud del archivo README, ejecutar estos modelos es rápido y fácil. El paquete hace todo el trabajo duro por usted. Por ejemplo, aquí hay un script completo que simula las dinámicas de SEIRS en una red con distanciamiento social, pruebas, rastreo de contactos y cuarentena en solo 10 líneas de código (vea las [notebooks de ejmplo](https://github.com/ryansmcgee/seirsplus/tree/master/examples) para más detalles de este ejemplo):
 ```python
 from seirsplus.models import *
 import networkx
@@ -173,12 +173,12 @@ model.figure_infections()
 <a name="usage-start"></a>
 ### Quick Start
 
-The [```examples```](https://github.com/ryansmcgee/seirsplus/tree/master/examples) directory contains two Jupyter notebooks: one for the deterministic model and one for the [network model](https://github.com/ryansmcgee/seirsplus/blob/master/examples/network_model_demo.ipynb). These notebooks walk through full simulations using each of these models with description of the steps involved.
+El directorio de [```ejemplos```](https://github.com/ryansmcgee/seirsplus/tree/master/examples) contiene dos Jupyter notebooks: una para el modelo determinístico y otra para el [modelo de red](https://github.com/ryansmcgee/seirsplus/blob/master/examples/network_model_demo.ipynb). Estas notebooks recorren simulaciones completas utilizando cada uno de estos modelos con una descripción de los pasos involucrados.
 
-**These notebooks can also serve as ready-to-run sandboxes for trying your own simulation scenarios by simply changing the parameter values in the notebook.**
+**Estas notebooks también pueden servir como entornos limitados listos para ejecutar para probar sus propios escenarios de simulación simplemente cambiando los valores de los parámetros en la notebook.**
 
 <a name="usage-install"></a>
-### Installing and Importing the Package
+### Instalando e Importando los paquetes
 
 All of the code needed to run the model is imported from the ```models``` module of this package.
 
