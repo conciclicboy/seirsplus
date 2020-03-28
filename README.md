@@ -260,7 +260,7 @@ model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, initN=100000, initI=1
 
 
 <a name="usage-init-network"></a>
-#### Network Model
+#### Modelo de Red
 
 All model parameter values, including the interaction network and (optional) quarantine network, are set in the call to the ```SEIRSNetworkModel``` constructor. The interaction network ```G``` and the basic SEIR parameters ```beta```, ```sigma```, and ```gamma``` are the only required arguments. All other arguments represent parameters for optional extended model dynamics; these optional parameters take default values that turn off their corresponding dynamics when not provided in the constructor. 
 
@@ -298,27 +298,27 @@ Constructor Argument | Parameter Description | Data Type | Default Value
 ```initR  ``` | initial number of recovered individuals | int | 0
 ```initF  ``` | initial number of deceased individuals | int | 0
 
-##### Basic SEIR on a network
+##### Modelo básico SEIR en una red
 
 ```python
 model = SEIRSNetworkModel(G=myGraph, beta=0.155, sigma=1/5.2, gamma=1/12.39, initI=100)
 ```
 
 
-##### Basic SEIRS on a network
+##### Modelo básico SEIRS en una red
 
 ```python
 model = SEIRSNetworkModel(G=myGraph, beta=0.155, sigma=1/5.2, gamma=1/12.39, xi=0.001, initI=100)
 ```
 
 
-##### SEIR on a network with global interactions (p>0)
+##### Modelo SEIR en una red con interacciones globales (p>0)
 
 ```python
 model = SEIRSNetworkModel(G=myGraph, beta=0.155, sigma=1/5.2, gamma=1/12.39, p=0.5, initI=100)
 ```
 
-##### SEIR on a network with testing and quarantining (```theta``` and ```psi``` testing params > 0, quarantine network ```Q``` provided)
+##### Modelo SEIR en una red con pruebas de enfermedad y cuarentena (```theta``` y ```psi``` parámetros de pruebas de enfermedad > 0, red de cuarentena ```Q``` es proveída)
 
 ```python
 model = SEIRSNetworkModel(G=myNetwork, beta=0.155, sigma=1/5.2, gamma=1/12.39, p=0.5,
@@ -327,7 +327,7 @@ model = SEIRSNetworkModel(G=myNetwork, beta=0.155, sigma=1/5.2, gamma=1/12.39, p
                           initI=100)
 ```
 
-##### SEIR on a network with testing, quarantining, and contact tracing (```theta``` and ```psi``` testing params > 0, quarantine network ```Q``` provided, ```phi``` contact tracing params > 0)
+##### Modelo SEIR en una red con pruebas de enfermedad, cuarentena, y rastreo de contactos (```theta``` y ```psi``` parámetros de pruebas de enfermedad > 0, red de cuarentena ```Q``` es proveída , el rastreo de contacto ```phi``` > 0)
 
 ```python
 model = SEIRSNetworkModel(G=myNetwork, beta=0.155, sigma=1/5.2, gamma=1/12.39, p=0.5,
@@ -337,7 +337,7 @@ model = SEIRSNetworkModel(G=myNetwork, beta=0.155, sigma=1/5.2, gamma=1/12.39, p
 ```
 
 <a name="usage-run"></a>
-### Running the Model
+### Corriendo el Modelo
 
 Stochastic network SEIRS dynamics are simulated using the Gillepsie algorithm.
 
