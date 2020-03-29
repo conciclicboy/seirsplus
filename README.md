@@ -343,7 +343,7 @@ model = SEIRSNetworkModel(G=myNetwork, beta=0.155, sigma=1/5.2, gamma=1/12.39, p
 ```
 
 <a name="usage-run"></a>
-### Corriendo el Modelo
+### Ejecutando el Modelo
 
 Las dinámicas de una red estocástica del modelo SEIS son simuladas usando el algoritmo de Gillepsie.
 
@@ -395,7 +395,7 @@ La red de interacción puede ser especificada por un objeto **```Graph```** de l
 
 Este modelo SEIRS + también implementa dinámicas correspondientes a las pruebas de individuos para detectar la enfermedad y el traslado de individuos con infecciones a un estado en el que su tasa de recuperación y mortalidad puede ser diferente. Además, dado que este modelo considera a los individuos en una red de interacción, se puede especificar un grafo separado que define las interacciones para los individuos con casos detectados (es decir, la red de "interacción de cuarentena").
 
-Los escenarios de epidemia de interés a menudo implican redes de interacción que cambian con el tiempo. Se pueden definir y utilizar múltiples redes de interacción en diferentes momentos en la simulación del modelo utilizando la función ```checkpoints``` (descrita en la siguiente sección).
+Los escenarios de epidemia de interés a menudo implican redes de interacción que cambian con el tiempo. Se pueden definir y utilizar múltiples redes de interacción en diferentes momentos en la simulación del modelo utilizando la función ```checkpoints``` (descrita más adelante).
 
 **_Nota:_** *El tiempo de simulación aumenta con el tamaño de la red. Las redes pequeñas simulan rápidamente, pero tienen más volatilidad estocástica. Las redes con ~ 10,000 son lo suficientemente grandes como para producir dinámicas de población per cápita que generalmente son consistentes con las de redes más grandes, pero lo suficientemente pequeñas como para simular rápidamente. Recomendamos el uso de redes con ~ 10,000 nodos para la creación de prototipos de parámetros y escenarios, que luego se pueden ejecutar en redes más grandes si se requiere más precisión*
 
