@@ -32,7 +32,7 @@ Notablemente, este paquete incluye una implementación estocástica de los model
 <a name="model-seirs"></a>
 ### Dinámica de SEIRS
 
-El fundamento de los modelos en este paquete es el clásico modelo SEIR de enfermedades infecciosas. El modelo SEIR es un modelo compartimental estándar en el cual la población es dividida en **susceptible (S)**, **expuesta (E)**, **infectada (I)**, and **recuperada (R)**. Un miembro susceptible de la población se convierte en expuesto (infección latente) cuando ha tenido contacto con un individuo infectado, y progresa hacia los estados de infección y recuperado. En el modelo SEIRS, individuos recuperados podrían ser suceptiles a recontagiarse después de cierto tiempo de recuperación (aunque la re-susceptibilidad podría ser excluida si se desea o no aplica). 
+El fundamento de los modelos en este paquete es el clásico modelo SEIR de enfermedades infecciosas. El modelo SEIR es un modelo compartimental estándar en el cual la población es dividida en **susceptible (S)**, **expuesta (E)**, **infectada (I)**, y **recuperada (R)**. Un miembro susceptible de la población se convierte en expuesto (infección latente) cuando ha tenido contacto con un individuo infectado, y progresa hacia los estados de infección y recuperado. En el modelo SEIRS, individuos recuperados podrían ser suceptiles a recontagiarse después de cierto tiempo de recuperación (aunque la re-susceptibilidad podría ser excluida si se desea o no aplica). 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRS_diagram.png" width="400"></div>
 </p>
@@ -47,26 +47,26 @@ Las tasas de transmisión entre estados están dadas por los parámetros:
 <a name="model-seirstesting"></a>
 ### Dinámica de SEIRS con Pruebas de la enfermedad
 
-El efecto de examinar la infección en la dinámica puede ser modelado introduciendo estados correspondientes a **exposición detectada (*D<sub>E</sub>*)** e **infección detectada (*D<sub>I</sub>*)**. Individuos expuestos e infectados son examinados a tasas *θ<sub>E</sub>* y *θ<sub>I</sub>*, respectivamente, y examinados test positivamente por la infección con tasas *ψ<sub>E</sub>* y *ψ<sub>I</sub>*, respectivamente  (la tasa de falsos positivos se asume ser cero, de modo que individuos susceptibles nunca dan positivo). Evaluaciones positivas mueven al individuo en estados de caso detectado, donde las tasas de transmisión, progresión, recuperación, y/o mortalidad (así como conectividad de la red en el modelo de red) podrían ser diferentes de los casos no detectados.
+El efecto de examinar la infección en la dinámica puede ser modelado introduciendo estados correspondientes a **exposición detectada (*D<sub>E</sub>*)** e **infección detectada (*D<sub>I</sub>*)**. Los individuos expuestos e infectados son examinados a tasas *θ<sub>E</sub>* y *θ<sub>I</sub>*, respectivamente, y las tasas de pruebas positivas son *ψ<sub>E</sub>* y *ψ<sub>I</sub>*, respectivamente  (la tasa de falsos positivos se asume ser cero, de modo que individuos susceptibles nunca dan positivo). Evaluaciones positivas mueven al individuo en estados de caso detectado, donde las tasas de transmisión, progresión, recuperación, y/o mortalidad (así como conectividad de la red en el modelo de red) podrían ser diferentes de los casos no detectados.
 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRStesting_diagram.png" width="400"></div>
 </p>
 
-Las tasad de transición entre estados están dadas por los parámetros:
-* β: tasa de transmisión (transmisiones por contacto S-I contact por tiempo)
+Las tasas de transición entre estados están dadas por los parámetros:
+* β: tasa de transmisión (transmisiones por contacto S-I por tiempo)
 * σ: tasa de progresión (inverso del período de incubación)
 * γ: tasa de recuperación (inverso del período de infección)
 * μ<sub>I</sub>: tasa de mortalidad de la enfermedad (muertes por infección individual por tiempo)
 * ξ: tasa de re-susceptibilidad (inverso del período de inmudinad temporal; 0 si hay inmunidad permanente)
 * θ<sub>E</sub>: tasa de evaluación de individuos expuestos 
-* θ<sub>I</sub>: tasa de evaluación de infeccionesn individuales 
+* θ<sub>I</sub>: tasa de evaluación de infecciones individuales 
 * ψ<sub>E</sub>: tasa de pruebas positivas de individuos expuestos
-* ψ<sub>I</sub>: tasa de pruebas positivas para individuos infectados 
+* ψ<sub>I</sub>: tasa de pruebas positivas de individuos infectados 
 * β<sub>D</sub>: tasa de transmisión de casos detectados (transmisiones por S-D<sub>I</sub> contacto por tiempo)
 * σ<sub>D</sub>: tasa de progresión de casos detectados (inverso del período de incubación)
 * γ<sub>D</sub>: tasa de recuperación de casos detectados (inverso del período de infección)
-* μ<sub>D</sub>: tasa de mortalidad dela enfermedad para los casos detectedos (muertes por infecciones por tiempo)
+* μ<sub>D</sub>: tasa de mortalidad dela enfermedad para los casos detectados (muertes por infecciones por tiempo)
 
 *Dinámicas vitales también son consideradas en los modelos(opcionales, pero inactivas por default), pero no son discutidas en el README.* 
 
@@ -86,7 +86,7 @@ La evolución de la dinámica de SEIRS descrita arriba puede ser explicada por e
 
 donde *S*, *E*, *I*, *R*, y *F* son los números de individuos susceptibles, expuestos, infectados, recuperados, y fallecidos, respectivamente, y *N* es el número total de individuos en la población (parámetros que se describen arriba).
 
-#### Dinámica de SEIRS con Pruebas de Enfermedad
+#### Dinámica de SEIRS aplicando Pruebas de Infección
 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRStesting_deterministic_equations.png" width="400"></div>
@@ -97,7 +97,7 @@ donde *S*, *E*, *I*, *D<sub>E</sub>*, *D<sub>I</sub>*, *R*, y *F* son los númer
 <a name="model-network"></a>
 ### Modelo de Red
 
-El modelo SEIRS estándr captura caracterpisticas importantes de la dinámica de las infecciones, pero es determinístico y asume una distribución poblacional uniforme (donde cada individuo es igualmente propenso a interactuar con otro individuo). Sin embargo, es importante considerar los efectos estocásticos y la estructura de la red de contacto cuando se estudia transmisión de enfermedades y el efecto de intervenciones como distanciamiento social y rastreo de contactos.
+El modelo SEIRS estándar captura características importantes de la dinámica de las infecciones, pero es determinístico y asume una distribución poblacional uniforme (donde cada individuo es igualmente propenso a interactuar con otro individuo). Sin embargo, es importante considerar los efectos estocásticos y la estructura de la red de contacto cuando se estudia transmisión de enfermedades y el efecto de intervenciones como distanciamiento social y rastreo de contactos.
 
 Este paquete incluye la implementación de la dinámica de SEIRS en redes estocásticas con comportamiento dinámico. 
 Esto sirve para analizar la relación entre la estructura de la red y las tasas de transmisión efectivas, incluido el efecto de las intervenciones basadas en la restricción de la red de contagios, como el distanciamiento social, la cuarentena y el rastreo de contactos.
@@ -106,13 +106,13 @@ Esto sirve para analizar la relación entre la estructura de la red y las tasas 
 
 Considere un grafo **_G_** representando individuos (nodos) y sus interacciones (aristas/lados). Cada individuo (nodo) tiene un estado (*S, E, I, D<sub>E</sub>, D<sub>I</sub>, R, or F*). El conjunto de nodos adyacentes (conectado por una arista) a un individuo define el conjunto de "contactos cercanos" (resaltados en negro). En determinado instante, cada individuo hace contacto con un indivduo aleatorio de su red de contactos cercanos con probabilidad *(1-p)β* o con un individuo aleatorio de toda cualquier punto de la red (resaltado en azul) con probabilidad *pβ*. Los últimos contactos globales representan individuos interactuando con la población en general (es decir, individuos fuera del círculo social, como en el transporte público, en un evento, etc.) con cierta probabilidad. Cuando un individuo susceptible interactúa con un individuo infeccioso, queda expuesto. El parámetro *p* define la localización de la red: para *p=0* un individuo solo interactua con sus contactos cercanos, mientras que *p=1* representa una población mezclada uniformemente. Las intervenciones de distanciamiento social podrían incrementar la focalización de la red (reducir *p*) y/o reducir la conectividad local de la red (reducir el grado de los individuos).
 
-Cada nodo *i* tiene un estado *X<sub>i</sub>* que se actualiza de acuerdo a las siguientes probabilidades de transición: 
+Cada nodo *i* representa un individuo que se encuentra en estado *X<sub>i</sub>*, el cual puede transicionar hacia otro estado de acuerdo a las siguientes probabilidades: 
 
 <p align="center">
   <img src="https://github.com/ryansmcgee/seirsplus/blob/master/images/SEIRSnetwork_transitions.png" width="500"></div>
 </p>
 
-donde *δ<sub>Xi=A</sub> = 1* si el estado de *X_i* es *A*, o *0* si no lo es, y donde *C<sub>G</sub>(i)* denota el conjunto de contactos cercanos al nodo *i*. Para poblaciones grandes y *p=1*, este modelo estocástico aborda la misma dinámica como el modelo determinístico SEIRS.
+donde *δ<sub>Xi=A</sub> = 1* representa que el estado de *X_i* es *A*, o *0* si no lo es, y donde *C<sub>G</sub>(i)* denota el conjunto de contactos cercanos al nodo *i*. Para poblaciones grandes y *p=1*, este modelo estocástico aborda la misma dinámica como el modelo determinístico SEIRS.
 
 Esta implementación se basa en el trabajo de Dottori et al. (2015).
 * Dottori, M. and Fabricius, G., 2015. SIR model on a dynamical network and the endemic state of an infectious disease. Physica A: Statistical Mechanics and its Applications, 434, pp.25-35.
@@ -122,7 +122,7 @@ Esta implementación se basa en el trabajo de Dottori et al. (2015).
 
 ##### Pruebas y Rastreo de Contactos
 
-Como en el modelo determinístico, individuos expuestos e infectados son evaluados a tasas *θ<sub>E</sub>* y *θ<sub>I</sub>*, respectivamente, y evaluados positivamente por infecciones a tasas *ψ<sub>E</sub>* y *ψ<sub>I</sub>*, respectivamente (la tasa de falsos positivos es asumida como cero, así que personas susceptibles nunca dan positivo). Al evaluar positivamente un individuo lo mueve al estado de caso detectado (*D<sub>E</sub>* o *D<sub>I</sub>*), donde las tasas de transmisión, progresión, recuperación, y/o mortalidad (así como la conectividad de la red en el modelo) puede ser diferentes que en los casos no detectados.
+Como en el modelo determinístico, individuos expuestos e infectados son evaluados a tasas *θ<sub>E</sub>* y *θ<sub>I</sub>*, respectivamente, y estos arrojan resultan infectados a tasas *ψ<sub>E</sub>* y *ψ<sub>I</sub>*, respectivamente (la tasa de falsos positivos es asumida como cero, así que personas susceptibles nunca dan positivo). Al evaluar positivamente un individuo lo mueve al estado de caso detectado (*D<sub>E</sub>* o *D<sub>I</sub>*), donde las tasas de transmisión, progresión, recuperación, y/o mortalidad (así como la conectividad de la red en el modelo) puede ser diferentes que en los casos no detectados.
 
 Considerar la interacción de la red nos permite modelar el rastreo de contactos, donde los contactos más cercanos de un individuo detectado como positivo son más propensos a ser evaluados a la enfermedad. En este modleo, un individuo se examina debido al rastreo de contactos a una tasa de *φ* veces el número de contactos que ha dado positivo.
 
@@ -148,14 +148,19 @@ Este paquete está diseñado para ser utilizado ampliamente. Escenarios complejo
 
 No se deje engañar por la longitud del archivo README, ejecutar estos modelos es rápido y fácil. El paquete hace todo el trabajo duro por usted. Por ejemplo, aquí hay un script completo que simula las dinámicas de SEIRS en una red con distanciamiento social, pruebas, rastreo de contactos y cuarentena en solo 10 líneas de código (vea las [notebooks de ejmplo](https://github.com/ryansmcgee/seirsplus/tree/master/examples) para más detalles de este ejemplo):
 ```python
+# Importando librerías
 from seirsplus.models import *
 import networkx
 
-numNodes = 10000 # Número de nodos
+numNodes = 10000 # Número de nodos del modelo
 baseGraph    = networkx.barabasi_albert_graph(n=numNodes, m=9) # Grafo inicial
-G_normal     = custom_exponential_graph(baseGraph, scale=100) # Exponencial
+
+# Grafo Exponencial con escala de 100
+G_normal     = custom_exponential_graph(baseGraph, scale=100) 
+
 # Interacciones con distanciamiento social:
 G_distancing = custom_exponential_graph(baseGraph, scale=10)
+
 # Interacciones con Cuarentena:
 G_quarantine = custom_exponential_graph(baseGraph, scale=5)
 
