@@ -1,4 +1,4 @@
-# SEIRS+ Model
+# Modelos SEIRS+
 
 Clonado del repositorio original de [SEIRS Model](https://github.com/ryansmcgee/seirsplus).
 <br>
@@ -220,21 +220,21 @@ from models import *
 <a name="usage-init-determ"></a>
 #### Modelo Determinístico
 
-Todos los parámetros del modelo, incluidas las redes de interacción de cuarentena normales y opcionales, se establecen en la llamada al constructor ```SEIRSModel``` constructor. Los parámetros básicos de SEIR ```beta```, ```sigma```, ```gamma```, y ```initN``` son los únicos argumentos requeridos. Todos los demás argumentos representan parámetros para la dinámica del modelo extendido opcional; estos parámetros opcionales toman valores predeterminados que desactivan su dinámica correspondiente cuando no se proporcionan en el constructor.
+Todos los parámetros del modelo, incluidas las redes de interacción de cuarentena normales y opcionales, se establecen en la llamada al construyendo un objeto ```SEIRSModel```. Los parámetros básicos de SEIR ```beta```, ```sigma```, ```gamma```, y ```initN``` son los únicos argumentos requeridos. Todos los demás argumentos representan parámetros para la dinámica del modelo extendido opcional; estos parámetros opcionales toman valores predeterminados que desactivan su dinámica correspondiente cuando no se proporcionan en el constructor.
 
-Constructor Argumento | Descripción del Parametero | Tipo de Dato | Valor Default
+Argumento | Descripción del Parámetro | Tipo de Dato | Valor por Default
 -----|-----|-----|-----
-```beta   ``` | tasa de transmisión | float | REQUIRED
-```sigma  ``` | tasa de progresión | float | REQUIRED
-```gamma  ``` | tasa de recuperación | float | REQUIRED
+```beta   ``` | tasa de transmisión | float | REQUERIDO
+```sigma  ``` | tasa de progresión | float | REQUERIDO
+```gamma  ``` | tasa de recuperación | float | REQUERIDO
 ```xi     ``` | tasa de re-susceptibilidad | float | 0
 ```mu_I   ``` | tasa de mortalidad relacionada a la infección | float | 0
 ```mu_0   ``` | tasa de mortalidad base | float | 0 
 ```nu     ``` | tasa de nacimiento base | float | 0 
-```beta_D ``` | tasa de transmisión para casos detectados | float | None (set equal to ```beta```) 
-```sigma_D``` | tasa de progresión para detected cases | float | None (set equal to ```sigma```)  
-```gamma_D``` | tasa de recuperación para casos detectados | float | None (set equal to ```gamma```)  
-```mu_D   ``` | tasa de mortalidad de casos detectados | float | None (set equal to ```mu_I```) 
+```beta_D ``` | tasa de transmisión para casos detectados | float | None (se deja igual a ```beta```) 
+```sigma_D``` | tasa de progresión para casos detectados | float | None (se deja igual a ```sigma```)  
+```gamma_D``` | tasa de recuperación para casos detectados | float | None (se deja igual a ```gamma```)  
+```mu_D   ``` | tasa de mortalidad de casos detectados | float | None (se deja igual a ```mu_I```) 
 ```theta_E``` | tasa de evaluación de individuos expuestos | float | 0 
 ```theta_I``` | tasa de evaluación de individuos infectados | float | 0 
 ```psi_E  ``` | probabilidad de tests positivos para individuos expuestos | float | 0 
@@ -253,14 +253,13 @@ Constructor Argumento | Descripción del Parametero | Tipo de Dato | Valor Defau
 model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, initN=100000, initI=100)
 ```
 
-
 ##### SEIRS Básico
 
 ```python
 model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, xi=0.001, initN=100000, initI=100)
 ```
 
-##### SEIR con pruebas de enfermedades y diferentes tasas de progresión para casos detectados (donde los parámetros de evaluación ```theta``` y ```psi``` > 0, y se proporcionan parámetros para casos detectados)
+##### SEIR con pruebas de enfermedades y diferentes tasas de progresión para casos detectados (donde los parámetros de evaluación ```theta``` y ```psi``` > 0, además de los parámetros de casos detectados)
 
 ```python
 model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, initN=100000, initI=100,
@@ -273,24 +272,24 @@ model = SEIRSModel(beta=0.155, sigma=1/5.2, gamma=1/12.39, initN=100000, initI=1
 
 Todos los valores de los parámetros del modelo, incluida la red de interacción y la red de cuarentena (opcional), se configuran en la llamada al constructor ```SEIRSNetworkModel```. La red de interacción ```G``` y los parámetros básicos de SEIR ```beta```, ```sigma```, y ```gamma``` son los únicos argumentos requeridos. Todos los demás argumentos representan parámetros opcionales para la dinámica del modelo extendido; estos parámetros opcionales toman valores predeterminados que desactivan su dinámica correspondiente cuando no se proporcionan en el constructor.
 
-**_Poblaciones Heterogeneas:_** A los nodos se les pueden asignar diferentes valores para un parámetro dado pasando una lista de valores (con longitud = número de nodos) para ese parámetro en el constructor. Todos los parámetros del constructor se enumeran y describen a continuación, seguidos de ejemplos de casos de uso para diversas elaboraciones del modelo que se muestran a continuación.
+**_Poblaciones Heterogéneas:_** A los nodos se les pueden asignar diferentes valores para un parámetro dado pasando una lista de valores (con longitud = número de nodos) para ese parámetro en el constructor. A continuación se presentan todos los parámetros para inicializar un objeto ```SEIRSNetworkModel``` y luego unos ejemplos.
 
-Argumento del Constructor | Descripción del Parámetro | Tipo de Dato | Valor Default
+Argumento | Descripción del Parámetro | Tipo de Dato | Valor por Default
 -----|-----|-----|-----
-```G      ``` | grafo expecificando la red de interacciones | ```networkx Graph``` or ```numpy 2d array```  | REQUIRED 
-```beta   ``` | tasa de transmisión | float | REQUIRED
-```sigma  ``` | tasa de progresión | float | REQUIRED
-```gamma  ``` | tasa de recuperación | float | REQUIRED
+```G      ``` | grafo expecificando la red de interacciones | ```networkx Graph``` or ```numpy 2d array```  | REQUERIDO 
+```beta   ``` | tasa de transmisión | float | REQUERIDO
+```sigma  ``` | tasa de progresión | float | REQUERIDO
+```gamma  ``` | tasa de recuperación | float | REQUERIDO
 ```xi     ``` | tasa de re-susceptibilidad | float | 0
 ```mu_I   ``` | tasa de mortalidad de infectados | float | 0
 ```mu_0   ``` | tasa de mortalidad base | float | 0 
 ```nu     ``` | tasa de nacimiento base | float | 0 
 ```p      ``` | probabilidad de interacciones globales (red focalizada) | float | 0
 ```Q      ``` | grafo especificando el efecto de la cuarentena en la red de interacciones | ```networkx Graph``` or ```numpy 2d array``` | None 
-```beta_D ``` | tasa de transmisión de casos detectados | float | None (set equal to ```beta```) 
-```sigma_D``` | tasa de progresión de casos detectados | float | None (set equal to ```sigma```)  
-```gamma_D``` | tasa de recuperación de casos detectados | float | None (set equal to ```gamma```)  
-```mu_D   ``` | tasa de mortalidad de infectados de casos detectados | float | None (set equal to ```mu_I```) 
+```beta_D ``` | tasa de transmisión de casos detectados | float | None (se deja igual a ```beta```) 
+```sigma_D``` | tasa de progresión de casos detectados | float | None (se deja igual a ```sigma```)  
+```gamma_D``` | tasa de recuperación de casos detectados | float | None (se deja igual a ```gamma```)  
+```mu_D   ``` | tasa de mortalidad de infectados de casos detectados | float | None (se deja igual a ```mu_I```) 
 ```theta_E``` | tasa de examinación para individuos expuestos | float | 0 
 ```theta_I``` | tasa de examinación para individuos infectados | float | 0 
 ```phi_E  ``` | tasa de rastreo de contactos para individuos expuestos | float | 0 
@@ -351,14 +350,14 @@ Las dinámicas de una red estocástica del modelo SEIS son simuladas usando el a
 Una vez el modelo esté inicializado, la simulación se puede correr llamando la siguiente función:
 
 ```python
-model.run(T=300)
+model.run(T=300) # Simulando 300 días
 ```
 
 La función ```run()``` tiene los siguientes argumentos
 
 Argumento | Descripción | Tipo de Dato | Valor Default
 -----|-----|-----|-----
-```T``` | tiempo de simulación | numeric | REQUIRED
+```T``` | tiempo de simulación | numeric | REQUERIDO
 ```checkpoints``` | dicionario de checkpoints (ver la siguiente sección) | dictionary | ```None```
 ```print_interval``` | (solo para modelo de red) intervalo de tiempo a imprimir el estatus de la simulación en la consola | numeric | 10
 ```verbose``` | Si es ```True```, imprime el conteo en cada estado en el intervalo de impresión, si es falso solo imprime el tiempo | bool | ```False```
@@ -390,13 +389,13 @@ beta = model.beta   # valor del parámetro beta (o lista de valores de beta para
 <a name="usage-networks"></a>
 ### Especificando Redes de Interacción
 
-Este modelo incluye un modelo de la dinámica poblacional de SERIS con una red de interacción estructurada (diferente a los modelos determinísticos estándar SIR/SEIR/SEIRS, los cuales asumen una población distribuida uniformemente). Cuando se usa el modelo de red, se debe especificar un grafo que represente la red de interacción de la población, donde cada nodo representa a un individuo en la población y las aristas conectan a individuos que tienen interacciones regulares.
+Este modelo incluye un modelo de la dinámica poblacional de SEIRS con una red de interacción estructurada (diferente a los modelos determinísticos estándar SIR/SEIR/SEIRS, los cuales asumen una población distribuida uniformemente). Cuando se usa el modelo de red, se debe especificar un grafo que represente la red de interacción de la población, donde cada nodo representa a un individuo en la población y las aristas conectan a individuos que tienen interacciones regulares.
 
-La red de interacción puede ser especificada por un objeto **```Graph```** de la librería **```networkx```** o un **arreglo 2D de ```numpy```** reprsentando la matriz de adyacencia, cualquiera de los cuales puede ser definido y generado por cualquier método.
+La red de interacción puede ser especificada por un objeto **```Graph```** de la librería **```networkx```** o un arreglo 2D de **```numpy```** representando la matriz de adyacencia, cualquiera de los cuales puede ser definido y generado por cualquier método.
 
-Este modelo SEIRS + también implementa dinámicas correspondientes a las pruebas de individuos para detectar la enfermedad y el traslado de individuos con infecciones detectadas a un estado en el que su tasa de recuperación, mortalidad, etc. puede ser diferente. Además, dado que este modelo considera a los individuos en una red de interacción, se puede especificar un gráfico separado que define las interacciones para los individuos con casos detectados (es decir, la red de "interacción de cuarentena").
+Este modelo SEIRS + también implementa dinámicas correspondientes a las pruebas de individuos para detectar la enfermedad y el traslado de individuos con infecciones a un estado en el que su tasa de recuperación y mortalidad puede ser diferente. Además, dado que este modelo considera a los individuos en una red de interacción, se puede especificar un grafo separado que define las interacciones para los individuos con casos detectados (es decir, la red de "interacción de cuarentena").
 
-Los escenarios de epidemia de interés a menudo implican redes de interacción que cambian con el tiempo. Se pueden definir y utilizar múltiples redes de interacción en diferentes momentos en la simulación del modelo utilizando la función de puntos de control (descrita en la sección a continuación).
+Los escenarios de epidemia de interés a menudo implican redes de interacción que cambian con el tiempo. Se pueden definir y utilizar múltiples redes de interacción en diferentes momentos en la simulación del modelo utilizando la función ```checkpoints``` (descrita en la siguiente sección).
 
 **_Nota:_** *El tiempo de simulación aumenta con el tamaño de la red. Las redes pequeñas simulan rápidamente, pero tienen más volatilidad estocástica. Las redes con ~ 10,000 son lo suficientemente grandes como para producir dinámicas de población per cápita que generalmente son consistentes con las de redes más grandes, pero lo suficientemente pequeñas como para simular rápidamente. Recomendamos el uso de redes con ~ 10,000 nodos para la creación de prototipos de parámetros y escenarios, que luego se pueden ejecutar en redes más grandes si se requiere más precisión*
 
